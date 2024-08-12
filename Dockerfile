@@ -1,19 +1,20 @@
-#  Dockerfile for Node Express Backend
-
+# Use the official Node.js image as the base image
 FROM node:16.17.0
 
-# Create App Directory
-RUN mkdir -p /usr/src/app
+# Set the working directory
 WORKDIR /usr/src/app
 
-# Install Dependencies
+# Copy the package.json and package-lock.json files
 COPY package*.json ./
-RUN yarn
 
-# Copy app source code
+# Install the dependencies
+RUN npm install --production
+
+# Copy the rest of the application code
 COPY . .
 
-# Exports
-EXPOSE 3030
+# Expose the port your app runs on (e.g., 3000)
+EXPOSE 3000
 
-CMD ["yarn","start", "nodemon"]
+# Start the application
+CMD ["node", "app.js"]
